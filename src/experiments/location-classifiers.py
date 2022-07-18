@@ -16,16 +16,16 @@ import torchvision.transforms as T
 from torch.utils.data import DataLoader, Dataset
 from PIL import Image
 
-from experiments.dataset import BGVarDataset
+from experiments.dataset import Focus
 
 
 # In[3]:
 
 
-categories = list(BGVarDataset.categories.keys())
-locations = list(BGVarDataset.locations.keys())
+categories = list(Focus.categories.keys())
+locations = list(Focus.locations.keys())
 bg_var_root = Path("/cmlscratch/pkattaki/datasets/focus")
-full_dataset = BGVarDataset(
+full_dataset = Focus(
     bg_var_root,
     categories=categories,
     times=None,
@@ -106,7 +106,7 @@ def test(model, attribute_classifier, dataloader):
 
 for idx in range(len(locations)):
     attribute_label = locations[idx]
-    attribute_dataset = BGVarDataset(
+    attribute_dataset = Focus(
         bg_var_root,
         categories=categories,
         times=None,

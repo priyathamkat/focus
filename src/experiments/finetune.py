@@ -13,7 +13,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 
 from experiments.evaluate_model import categories, label_to_correct_idxes, test, generate_heatmap
-from experiments.dataset import BGVarDataset, split_dataset
+from experiments.dataset import Focus, split_dataset
 
 parser = argparse.ArgumentParser(
     description="Finetune a model on FOCUS"
@@ -72,9 +72,9 @@ if __name__ == "__main__":
         ]
     )
 
-    dataset = BGVarDataset(
+    dataset = Focus(
         args.bg_var_root,
-        categories=BGVarDataset.categories,
+        categories=Focus.categories,
         times=None,
         weathers=None,
         locations=None,
@@ -171,8 +171,8 @@ if __name__ == "__main__":
             images, labels = images.cuda(), labels.cuda()
             outputs = model(images)
             outputs = F.softmax(outputs, dim=1)
-            collated_logprobs = torch.zeros(images.shape[0], len(BGVarDataset.categories), device=torch.device("cuda"))
-            for idx in range(len(BGVarDataset.categories)):
+            collated_logprobs = torch.zeros(images.shape[0], len(Focus.categories), device=torch.device("cuda"))
+            for idx in range(len(Focus.categories)):
                 collated_logprobs[:, idx] = torch.log(torch.sum(outputs[:, list(label_to_correct_idxes[idx])], 1))
             loss = criterion(collated_logprobs, labels)
             loss.backward()

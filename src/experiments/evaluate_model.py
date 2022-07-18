@@ -13,7 +13,7 @@ import torchvision.transforms as T
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from experiments.dataset import DCR, BGVarDataset
+from experiments.dataset import DCR, Focus
 
 parser = argparse.ArgumentParser(
     description="Evaluate a model on a subset of ImageNet and BG-Var"
@@ -46,10 +46,10 @@ parser.add_argument(
     help="Path to the log folder",
 )
 
-categories = list(BGVarDataset.categories.keys())
-times = list(BGVarDataset.times.keys())
-weathers = list(BGVarDataset.weathers.keys())
-locations = list(BGVarDataset.locations.keys())
+categories = list(Focus.categories.keys())
+times = list(Focus.times.keys())
+weathers = list(Focus.weathers.keys())
+locations = list(Focus.locations.keys())
 
 uncommon = {
     0: {  # truck
@@ -714,9 +714,9 @@ if __name__ == "__main__":
     else:
         raise ValueError("Unknown model architecture")
 
-    bg_var_test_dataset = BGVarDataset(
+    bg_var_test_dataset = Focus(
         args.bg_var_root,
-        categories=BGVarDataset.categories,
+        categories=Focus.categories,
         times=None,
         weathers=None,
         locations=None,

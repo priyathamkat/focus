@@ -15,14 +15,14 @@ import torchvision.transforms as T
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from experiments.dataset import BGVarDataset, split_dataset
+from experiments.dataset import Focus, split_dataset
 
 
 # In[3]:
 
 
-categories = list(BGVarDataset.categories.keys())
-locations = list(BGVarDataset.locations.keys())
+categories = list(Focus.categories.keys())
+locations = list(Focus.locations.keys())
 bg_var_root = Path("/cmlscratch/pkattaki/datasets/focus")
 
 
@@ -125,7 +125,7 @@ def test(model, classifiers, dataloader):
 # In[ ]:
 
 
-locations_dataset = BGVarDataset(
+locations_dataset = Focus(
     bg_var_root,
     categories=categories,
     times=None,

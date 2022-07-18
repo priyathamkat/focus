@@ -11,7 +11,7 @@ from experiments.database import BGVarDB
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
-class BGVarDataset(Dataset):
+class Focus(Dataset):
 
     categories = {
         "truck": 0,
@@ -89,16 +89,16 @@ class BGVarDataset(Dataset):
         if image.mode != "RGB":
             image = image.convert("RGB")
 
-        category = BGVarDataset.categories[self.image_files[idx][1]]
+        category = Focus.categories[self.image_files[idx][1]]
         if self.transform:
             image = self.transform(image)
         if self.target_transform:
             category = self.target_transform(category)
-        time = BGVarDataset.times[self.image_files[idx][2]]
-        weather = BGVarDataset.weathers[self.image_files[idx][3]]
-        locations = torch.zeros(len(BGVarDataset.locations), dtype=torch.long)
+        time = Focus.times[self.image_files[idx][2]]
+        weather = Focus.weathers[self.image_files[idx][3]]
+        locations = torch.zeros(len(Focus.locations), dtype=torch.long)
         for location in (self.image_files[idx][4]).split(", "):
-            locations[BGVarDataset.locations[location]] = 1
+            locations[Focus.locations[location]] = 1
 
         return image, category, time, weather, locations
 
@@ -161,7 +161,7 @@ class DCR(Dataset):
 if __name__ == "__main__":
     database = BGVarDB("./temp.db")
     database.populate_temp_table()
-    dataset = BGVarDataset(
+    dataset = Focus(
         ".", database=database, categories=["cat", "car"], locations=["forest"]
     )
     train_dataset, test_dataset = split_dataset(dataset, train_fraction=0.5)
