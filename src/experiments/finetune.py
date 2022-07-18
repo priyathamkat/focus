@@ -21,7 +21,7 @@ parser = argparse.ArgumentParser(
 
 
 parser.add_argument(
-    "--bg_var_root",
+    "--focus_root",
     type=str,
     default="/cmlscratch/pkattaki/datasets/focus",
     help="Path to FOCUS",
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     )
 
     dataset = Focus(
-        args.bg_var_root,
+        args.focus_root,
         categories=Focus.categories,
         times=None,
         weathers=None,

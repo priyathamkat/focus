@@ -24,9 +24,9 @@ from experiments.dataset import Focus
 
 categories = list(Focus.categories.keys())
 locations = list(Focus.locations.keys())
-bg_var_root = Path("/cmlscratch/pkattaki/datasets/focus")
+focus_root = Path("/cmlscratch/pkattaki/datasets/focus")
 full_dataset = Focus(
-    bg_var_root,
+    focus_root,
     categories=categories,
     times=None,
     weathers=None,
@@ -51,7 +51,7 @@ class AttDataset(Dataset):
     
     def __getitem__(self, idx):
         image_path, label = self._image_list[idx]
-        image_path = bg_var_root / image_path
+        image_path = focus_root / image_path
         image = Image.open(image_path)
         if image.mode != "RGB":
             image = image.convert("RGB")
@@ -107,7 +107,7 @@ def test(model, attribute_classifier, dataloader):
 for idx in range(len(locations)):
     attribute_label = locations[idx]
     attribute_dataset = Focus(
-        bg_var_root,
+        focus_root,
         categories=categories,
         times=None,
         weathers=None,

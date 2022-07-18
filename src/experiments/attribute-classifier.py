@@ -23,7 +23,7 @@ from experiments.dataset import Focus, split_dataset
 
 categories = list(Focus.categories.keys())
 locations = list(Focus.locations.keys())
-bg_var_root = Path("/cmlscratch/pkattaki/datasets/focus")
+focus_root = Path("/cmlscratch/pkattaki/datasets/focus")
 
 
 # In[4]:
@@ -126,7 +126,7 @@ def test(model, classifiers, dataloader):
 
 
 locations_dataset = Focus(
-    bg_var_root,
+    focus_root,
     categories=categories,
     times=None,
     weathers=None,
